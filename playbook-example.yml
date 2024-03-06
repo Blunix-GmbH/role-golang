@@ -1,0 +1,10 @@
+- name: install golang
+  hosts: my-favorite-webserver
+  roles:
+
+    - role: role-golang
+      vars:
+        golang_version: 1.22.1
+        golang_users_bashrc:
+          - /root/.bashrc
+

@@ -1,0 +1,18 @@
+- name: "download and extract golang {{ golang_version }} archive"
+  unarchive:
+    src: "https://go.dev/dl/go{{ golang_version }}.linux-amd64.tar.gz"
+    dest: /usr/local/bin/
+    remote_src: True
+    owner: root
+    group: root
+    mode: 0755
+
+- name: configure ~/.bashrc for golang_users
+  blockinfile:
+    path: "{{ golang_user_bashrc }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK golang"
+    content: |
+      export PATH=$PATH:/usr/local/bin/go/bin
+  with_items: "{{ golang_users_bashrc }}"
+  loop_control:
+    loop_var: golang_user_bashrc
